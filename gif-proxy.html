@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GIF Proxy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+        }
+        
+        .gif-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gif-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .loading {
+            font-family: Arial, sans-serif;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .error {
+            font-family: Arial, sans-serif;
+            color: #d32f2f;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gif-container">
+        <div class="loading">Loading GIF...</div>
+    </div>
+    
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+        
+        function showError(message) {
+            const container = document.querySelector('.gif-container');
+            container.innerHTML = `<div class="error">${message}</div>`;
+        }
+        
+        function resizeGif(img) {
+            const container = document.querySelector('.gif-container');
+            
+            if (!img || !container) return;
+            
+            const parentWidth = window.innerWidth;
+            const naturalWidth = img.naturalWidth;
+            const naturalHeight = img.naturalHeight;
+            
+            if (naturalWidth === 0 || naturalHeight === 0) return;
+            
+            const aspectRatio = naturalHeight / naturalWidth;
+            
+            // Calculate new dimensions
+            const newWidth = Math.min(parentWidth - 20, naturalWidth); // 20px margin
+            const newHeight = newWidth * aspectRatio;
+            
+            // Apply dimensions
+            img.style.width = newWidth + 'px';
+            img.style.height = newHeight + 'px';
+            
+            // Resize iframe height to match content
+            if (window.parent && window.parent !== window) {
+                try {
+                    window.parent.postMessage({
+                        type: 'gif-resize',
+                        width: newWidth,
+                        height: newHeight + 40 // Add some padding
+                    }, '*');
+                } catch (e) {
+                    console.log('Cannot communicate with parent frame');
+                }
+            }
+        }
+        
+        function loadGif() {
+            const gifUrl = getQueryParam('gif');
+            const container = document.querySelector('.gif-container');
+            
+            if (!gifUrl) {
+                showError('Error: No GIF URL provided.<br>Usage: gif-proxy.html?gif=YOUR_GIF_URL');
+                return;
+            }
+            
+            if (!isValidUrl(gifUrl)) {
+                showError('Error: Invalid URL provided');
+                return;
+            }
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.className = 'gif-image';
+            img.alt = 'GIF Image';
+            
+            img.onload = function() {
+                container.innerHTML = '';
+                container.appendChild(img);
+                resizeGif(img);
+            };
+            
+            img.onerror = function() {
+                showError('Error: Unable to load the GIF image.<br>Please check the URL and CORS settings.');
+            };
+            
+            // Set source to start loading
+            img.src = gifUrl;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadGif);
+        window.addEventListener('resize', function() {
+            const img = document.querySelector('.gif-image');
+            if (img) resizeGif(img);
+        });
+    </script>
+</body>
+</html>
