@@ -12,7 +12,7 @@
         }
         
         body {
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -23,17 +23,17 @@
         
         .gif-container {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
         .gif-image {
-            max-width: 100%;
+            width: 100%;
             height: auto;
             display: block;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: contain;
         }
         
         .loading {
@@ -81,7 +81,8 @@
             
             if (!img || !container) return;
             
-            const parentWidth = window.innerWidth;
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
             const naturalWidth = img.naturalWidth;
             const naturalHeight = img.naturalHeight;
             
@@ -89,12 +90,12 @@
             
             const aspectRatio = naturalHeight / naturalWidth;
             
-            // Calculate new dimensions
-            const newWidth = Math.min(parentWidth - 20, naturalWidth); // 20px margin
+            // Set width to 100% of viewport
+            const newWidth = viewportWidth;
             const newHeight = newWidth * aspectRatio;
             
             // Apply dimensions
-            img.style.width = newWidth + 'px';
+            img.style.width = '100%';
             img.style.height = newHeight + 'px';
             
             // Resize iframe height to match content
@@ -103,7 +104,7 @@
                     window.parent.postMessage({
                         type: 'gif-resize',
                         width: newWidth,
-                        height: newHeight + 40 // Add some padding
+                        height: newHeight
                     }, '*');
                 } catch (e) {
                     console.log('Cannot communicate with parent frame');
