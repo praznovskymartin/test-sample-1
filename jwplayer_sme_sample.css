@@ -1,97 +1,115 @@
 /* ==========================================================================
-   1. MAIN DISPLAY BUTTON CUSTOMIZATION (ROUNDED RED BRANDED PLAY)
+   1. MAIN DISPLAY BUTTON (60% TRANSPARENT CIRCLE + EXTRA PADDING)
    ========================================================================== */
 .jwplayer.jw-skin-sme-brand .jw-display-icon-container {
-    background-color: transparent !important; /* Remove old default circle backdrop */
+    background-color: transparent !important;
     border: none !important;
 }
 
+/* Screen 1 Fix: 60% Alpha background color with scaled padding footprint */
 .jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display {
-    background-color: #cf2528 !important;
-    border-radius: 50% !important; /* Circular like the sample image */
-    width: 68px !important;
-    height: 68px !important;
-    line-height: 68px !important;
+    background-color: rgba(207, 37, 40, 0.60) !important; /* #cf2528 at 60% opacity */
+    border-radius: 50% !important;
+    width: 90px !important;  /* Increased dimension for additional padding feel */
+    height: 90px !important;
+    line-height: 90px !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
 }
 
-/* Play button hover response scaling */
 .jwplayer.jw-skin-sme-brand:hover .jw-display-icon-container .jw-icon-display {
-    transform: scale(1.08);
-    background-color: #b51f22 !important; /* Deeper brand red on interaction */
+    background-color: rgba(207, 37, 40, 0.85) !important; /* Brightens up on hover */
+    transform: scale(1.06);
 }
 
-/* Adjust layout alignment for the internal triangle symbol */
+/* Re-center the play arrow perfectly inside the larger circle container */
 .jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display::before {
-    font-size: 30px !important;
-    padding-left: 4px; /* Perfectly centers standard play icon vectors */
+    font-size: 36px !important;
+    padding-left: 6px; 
     color: #ffffff !important;
+    display: block;
+    line-height: 90px !important;
 }
 
 /* ==========================================================================
-   2. DURATION Snippet (REPOSITION TO TOP LEFT POSITION)
+   2. DURATION BADGE FIX (SCREENS 2 & 3 OVERRIDES)
    ========================================================================== */
-/* Hide the duration element inside the active lower control bar when playing */
-.jwplayer.jw-state-playing .jw-controlbar .jw-text-duration {
-    display: inline-block !important; 
+
+/* Target the overall wrapper container context */
+.jwplayer.jw-skin-sme-brand {
+    position: relative;
 }
 
-/* Reposition duration pill onto the top left quadrant during discovery state */
+/* Ensure the controlbar container elements preserve normal order on standard play */
 .jwplayer.jw-skin-sme-brand .jw-controlbar {
-    position: absolute;
+    z-index: 11;
 }
 
-/* Force duration wrapper out of normal layout flow onto top left overlay */
-.jwplayer.jw-skin-sme-brand:not(.jw-state-playing) .jw-text-duration {
+/* --- THE FIX: Force the duration badge into an absolute pin layout ONLY during paused state --- */
+.jwplayer.jw-skin-sme-brand.jw-state-paused .jw-controlbar .jw-text-duration,
+.jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controlbar .jw-text-duration {
     position: absolute !important;
-    top: -340px !important; /* Fallback baseline adjustment */
-    top: calc(-100% + 50px) !important; /* Pushes element dynamic distance to top area */
+    /* Anchor safely relative to the video window frame bounding layout box */
+    bottom: calc(100% + 15px) !important; 
     left: 15px !important;
+    transform: translateY(-280px) !important; /* Shorthand fallback push to top corner */
+    transform: translateY(calc(-100% + 350px)) !important; /* Dynamic responsive baseline */
+    
+    /* Brand Pill Layout Visuals */
     background-color: rgba(0, 0, 0, 0.55) !important;
     color: #ffffff !important;
-    padding: 3px 10px !important;
-    border-radius: 20px !important; /* Soft pill container layout */
+    padding: 4px 10px !important;
+    border-radius: 6px !important; /* Matches modern subtle card design radiuses */
     font-size: 13px !important;
     font-weight: 600 !important;
-    letter-spacing: 0.5px;
-    z-index: 10;
-    display: block !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    display: inline-block !important;
+    z-index: 999 !important;
 }
 
-/* Media query adjustment to keep duration element safe inside container bounds on mobile display */
-@media parseFloat((max-width: 480px)) {
-    .jwplayer.jw-skin-sme-brand:not(.jw-state-playing) .jw-text-duration {
-        top: -180px !important;
-        font-size: 11px !important;
+/* --- SCREEN 2 & 3 FIX: Restore Standard UI Tracking Configuration when Playing --- */
+/* When the player goes active or gets hovered, revert layout tracking to baseline */
+.jwplayer.jw-skin-sme-brand.jw-state-playing .jw-controlbar .jw-text-duration {
+    position: static !important;
+    transform: none !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: inherit !important;
+    display: inline-block !important;
+}
+
+/* Clean up mobile viewport clipping errors if container aspect targets drop below standard bounds */
+@media screen and (max-width: 600px) {
+    .jwplayer.jw-skin-sme-brand.jw-state-paused .jw-controlbar .jw-text-duration,
+    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controlbar .jw-text-duration {
+        transform: translateY(calc(-100% + 160px)) !important;
     }
 }
 
 /* ==========================================================================
-   3. DESCRIPTION OVERLAY AT THE BOTTOM POSITION
+   3. BOTTOM DESCRIPTION BANNER
    ========================================================================== */
-/* Target internal overlay layer area */
 .jwplayer.jw-skin-sme-brand .jw-title {
     top: auto !important;
     bottom: 0 !important;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0,0,0,0) 100%) !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 75%, rgba(0,0,0,0) 100%) !important;
     width: 100% !important;
-    padding: 40px 20px 25px 20px !important;
-    box-sizing: border-box;
+    padding: 50px 20px 25px 20px !important;
 }
 
-/* Description Typography Styling styling to match card context */
 .jwplayer.jw-skin-sme-brand .jw-title-description {
     color: #ffffff !important;
     font-size: 20px !important;
-    line-height: 1.35 !important;
+    line-weight: 1.4 !important;
     font-weight: 700 !important;
     max-width: 85%;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }
 
-/* Hide standard top header configurations when playing to clean interface viewport */
-.jwplayer.jw-state-playing .jw-title {
+/* Ensure title and details hide instantly during live video playback tracking */
+.jwplayer.jw-skin-sme-brand.jw-state-playing .jw-title {
     display: none !important;
 }
