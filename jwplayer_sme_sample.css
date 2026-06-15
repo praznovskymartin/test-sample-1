@@ -1,26 +1,97 @@
-/* Target the large center play button container */
-.jw-flag-touch .jw-display-icon-container, 
-.jw-display-icon-container {
-    background-color: rgba(0, 0, 0, 0.4) !important; /* Default state background container if needed, or transparent */
-    border-radius: 12px;
+/* ==========================================================================
+   1. MAIN DISPLAY BUTTON CUSTOMIZATION (ROUNDED RED BRANDED PLAY)
+   ========================================================================== */
+.jwplayer.jw-skin-sme-brand .jw-display-icon-container {
+    background-color: transparent !important; /* Remove old default circle backdrop */
+    border: none !important;
 }
 
-/* Style the inner play icon background to match YouTube red */
-.jwplayer.jw-skin-custom-brand .jw-display-icon-container .jw-icon-display {
+.jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display {
     background-color: #cf2528 !important;
-    border-radius: 14px; /* YouTube style soft rounded corners */
-    padding: 10px 20px;   /* Gives it the wider, rectangular aspect ratio */
+    border-radius: 50% !important; /* Circular like the sample image */
+    width: 68px !important;
+    height: 68px !important;
+    line-height: 68px !important;
     color: #ffffff !important;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
 }
 
-/* Hover effects when the user hovers over the player */
-.jwplayer.jw-skin-custom-brand:hover .jw-display-icon-container .jw-icon-display {
-    background-color: #e62117 !important; /* Slightly brighter red on hover */
-    transform: scale(1.05);                /* Subtle pop effect */
+/* Play button hover response scaling */
+.jwplayer.jw-skin-sme-brand:hover .jw-display-icon-container .jw-icon-display {
+    transform: scale(1.08);
+    background-color: #b51f22 !important; /* Deeper brand red on interaction */
 }
 
-/* Ensure the white triangle icon remains crisp inside the red block */
-.jwplayer.jw-skin-custom-brand .jw-display-icon-container .jw-icon-display::before {
+/* Adjust layout alignment for the internal triangle symbol */
+.jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display::before {
+    font-size: 30px !important;
+    padding-left: 4px; /* Perfectly centers standard play icon vectors */
     color: #ffffff !important;
+}
+
+/* ==========================================================================
+   2. DURATION Snippet (REPOSITION TO TOP LEFT POSITION)
+   ========================================================================== */
+/* Hide the duration element inside the active lower control bar when playing */
+.jwplayer.jw-state-playing .jw-controlbar .jw-text-duration {
+    display: inline-block !important; 
+}
+
+/* Reposition duration pill onto the top left quadrant during discovery state */
+.jwplayer.jw-skin-sme-brand .jw-controlbar {
+    position: absolute;
+}
+
+/* Force duration wrapper out of normal layout flow onto top left overlay */
+.jwplayer.jw-skin-sme-brand:not(.jw-state-playing) .jw-text-duration {
+    position: absolute !important;
+    top: -340px !important; /* Fallback baseline adjustment */
+    top: calc(-100% + 50px) !important; /* Pushes element dynamic distance to top area */
+    left: 15px !important;
+    background-color: rgba(0, 0, 0, 0.55) !important;
+    color: #ffffff !important;
+    padding: 3px 10px !important;
+    border-radius: 20px !important; /* Soft pill container layout */
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    display: block !important;
+}
+
+/* Media query adjustment to keep duration element safe inside container bounds on mobile display */
+@media parseFloat((max-width: 480px)) {
+    .jwplayer.jw-skin-sme-brand:not(.jw-state-playing) .jw-text-duration {
+        top: -180px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* ==========================================================================
+   3. DESCRIPTION OVERLAY AT THE BOTTOM POSITION
+   ========================================================================== */
+/* Target internal overlay layer area */
+.jwplayer.jw-skin-sme-brand .jw-title {
+    top: auto !important;
+    bottom: 0 !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0,0,0,0) 100%) !important;
+    width: 100% !important;
+    padding: 40px 20px 25px 20px !important;
+    box-sizing: border-box;
+}
+
+/* Description Typography Styling styling to match card context */
+.jwplayer.jw-skin-sme-brand .jw-title-description {
+    color: #ffffff !important;
+    font-size: 20px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+    max-width: 85%;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+/* Hide standard top header configurations when playing to clean interface viewport */
+.jwplayer.jw-state-playing .jw-title {
+    display: none !important;
 }
