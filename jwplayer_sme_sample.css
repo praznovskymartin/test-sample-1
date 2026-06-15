@@ -1,0 +1,26 @@
+/* Target the large center play button container */
+.jw-flag-touch .jw-display-icon-container, 
+.jw-display-icon-container {
+    background-color: rgba(0, 0, 0, 0.4) !important; /* Default state background container if needed, or transparent */
+    border-radius: 12px;
+}
+
+/* Style the inner play icon background to match YouTube red */
+.jwplayer.jw-skin-custom-brand .jw-display-icon-container .jw-icon-display {
+    background-color: #cf2528 !important;
+    border-radius: 14px; /* YouTube style soft rounded corners */
+    padding: 10px 20px;   /* Gives it the wider, rectangular aspect ratio */
+    color: #ffffff !important;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effects when the user hovers over the player */
+.jwplayer.jw-skin-custom-brand:hover .jw-display-icon-container .jw-icon-display {
+    background-color: #e62117 !important; /* Slightly brighter red on hover */
+    transform: scale(1.05);                /* Subtle pop effect */
+}
+
+/* Ensure the white triangle icon remains crisp inside the red block */
+.jwplayer.jw-skin-custom-brand .jw-display-icon-container .jw-icon-display::before {
+    color: #ffffff !important;
+}
