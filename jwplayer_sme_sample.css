@@ -95,19 +95,6 @@
     height: auto !important;
 }
 
-/* ==========================================================================
-   3. CONTROL BAR & DURATION FIX (CLEAN DEFAULT OVERRIDES)
-   ========================================================================== */
-.jwplayer.jw-skin-sme-brand .jw-controlbar .jw-text-duration {
-    position: static !important;
-    transform: none !important;
-    background-color: transparent !important;
-    padding: 0 4px !important;
-    font-size: 12px !important;
-    font-weight: normal !important;
-    line-height: inherit !important;
-    display: inline-block !important;
-}
 
 /* ==========================================================================
    4. BRAND DESCRIPTION BANNER (PINNED TO BOTTOM OVERLAY)
