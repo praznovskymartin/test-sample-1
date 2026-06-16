@@ -122,6 +122,7 @@
         font-size: 1.0em !important;   /* Matches arrow 1 setup */
         padding-left: 0px !important;   /* Matches strikethrough arrow 2 */
         padding-right: 0px !important;  /* Matches strikethrough arrow 3 */
+        padding-bottom: 0px !important;  /* Matches strikethrough arrow 3 */
     }
     
     .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title {
@@ -135,4 +136,5 @@
     font-size: 1.0em !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
+    padding-bottom: 0px !important;
 }
