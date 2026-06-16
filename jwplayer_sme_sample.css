@@ -112,3 +112,27 @@
 .jwplayer.jw-skin-sme-brand.jw-state-playing .jw-title {
     display: none !important;
 }
+
+/* ==========================================================================
+   5. DEVTOOLS SCREENSHOT UPDATES (IDLE MOBILE TITLE OPTIMIZATIONS)
+   ========================================================================== */
+/* Apply DevTools overrides during idle state on smaller screens */
+@media screen and (max-width: 480px) {
+    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title-primary {
+        font-size: 1.0em !important;   /* Matches arrow 1 setup */
+        padding-left: 0px !important;   /* Matches strikethrough arrow 2 */
+        padding-right: 0px !important;  /* Matches strikethrough arrow 3 */
+    }
+    
+    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title {
+        padding: 30px 15px 15px 15px !important; /* Retain responsive container framing */
+    }
+}
+
+/* Core fallback hooks tracking native container breakpoint alterations */
+.jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-0 .jw-title-primary,
+.jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-1 .jw-title-primary {
+    font-size: 1.0em !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
