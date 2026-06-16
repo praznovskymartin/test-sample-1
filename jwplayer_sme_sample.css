@@ -16,7 +16,7 @@
     color: #ffffff !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
-    padding:10px;
+    padding: 10px;
 }
 
 /* Brightens and scales smoothly on initial hover event states */
@@ -32,10 +32,10 @@
     color: #ffffff !important;
     display: block;
     line-height: 70px !important;
+    
 }
 
 /* --- Mobile Fix: Remove extra padding/footprint overhead for small widgets --- */
-/* Combines standard browser queries with JW Player container breakpoints (0 and 1) */
 @media screen and (max-width: 467px) {
     .jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display {
         padding: 0px !important;
@@ -47,7 +47,7 @@
 }
 
 /* ==========================================================================
-   2. LOGO DISPLAY RULES (ONLY SHOW ON IDLE STATE)
+   2. LOGO DISPLAY & RESPONSIVE BREAKPOINTS (ONLY SHOW ON IDLE STATE)
    ========================================================================== */
 /* Hide the logo globally across all playback, paused, and buffering states */
 .jwplayer.jw-skin-sme-brand .jw-logo {
@@ -55,7 +55,6 @@
 }
 
 /* Force the logo to render ONLY when the player is in the initial idle state */
-.jwplayer.jw-skin-sme-brand.jw-state-paused .jw-logo,
 .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-logo {
     display: block !important;
 }
@@ -65,36 +64,65 @@
 /* Tablet Viewports */
 @media screen and (max-width: 768px) {
     .jwplayer.jw-skin-sme-brand .jw-logo {
-        top: 12px !important;    /* Tighten margins slightly */
+        top: 12px !important;
         right: 12px !important;
     }
     .jwplayer.jw-skin-sme-brand .jw-logo-button img,
     .jwplayer.jw-skin-sme-brand .jw-logo-button svg {
-        width: 45px !important;  /* Scale down wrapper size */
+        width: 45px !important;
         height: auto !important;
     }
 }
 
-/* Mobile Viewports */
+/* Mobile Viewports & JW Player Native Mobile Breakpoints */
 @media screen and (max-width: 480px) {
     .jwplayer.jw-skin-sme-brand .jw-logo {
-        top: 10px !important;    /* Clean pin constraints */
+        top: 10px !important;
         right: 10px !important;
     }
     .jwplayer.jw-skin-sme-brand .jw-logo-button img,
     .jwplayer.jw-skin-sme-brand .jw-logo-button svg {
-        width: 36px !important;  /* Compact view layout constraint */
+        width: 36px !important;
         height: auto !important;
     }
 }
 
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-0 .jw-logo-button img,
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-0 .jw-logo-button svg,
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-1 .jw-logo-button img,
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-1 .jw-logo-button svg {
+    width: 36px !important;
+    height: auto !important;
+}
+
 /* ==========================================================================
-   3. BRAND DESCRIPTION BANNER (PINNED TO BOTTOM OVERLAY)
+   3. CONTROL BAR & DURATION FIX (CLEAN DEFAULT OVERRIDES)
    ========================================================================== */
+.jwplayer.jw-skin-sme-brand .jw-controlbar .jw-text-duration {
+    position: static !important;
+    transform: none !important;
+    background-color: transparent !important;
+    padding: 0 4px !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: inherit !important;
+    display: inline-block !important;
+}
+
+/* ==========================================================================
+   4. BRAND DESCRIPTION BANNER (PINNED TO BOTTOM OVERLAY)
+   ========================================================================== */
+/* UPDATE 1: Strip the backdrop element layers entirely */
+.jwplayer.jw-skin-sme-brand .jw-preview {
+    background-image: none !important;
+    background-color: transparent !important;
+}
+
+/* UPDATE 2: Implemented specific mid-gradient color-stop curve (55%) */
 .jwplayer.jw-skin-sme-brand .jw-title {
     top: auto !important;
     bottom: 0 !important;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 75%, rgba(0,0,0,0) 100%) !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 55%, rgba(0,0,0,0) 100%) !important;
     width: 100% !important;
     padding: 50px 20px 25px 20px !important;
     box-sizing: border-box;
@@ -114,27 +142,54 @@
 }
 
 /* ==========================================================================
-   5. DEVTOOLS SCREENSHOT UPDATES (IDLE MOBILE TITLE OPTIMIZATIONS)
+   5. DESKTOP ONLY TITLE OPTIMIZATIONS (MIN-WIDTH: 481px)
    ========================================================================== */
-/* Apply DevTools overrides during idle state on smaller screens */
-@media screen and (max-width: 480px) {
-    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title-primary {
-        font-size: 1.0em !important;   /* Matches arrow 1 setup */
-        padding-left: 0px !important;   /* Matches strikethrough arrow 2 */
-        padding-right: 0px !important;  /* Matches strikethrough arrow 3 */
-        padding-bottom: 0px !important;  /* Matches strikethrough arrow 3 */
-    }
-    
-    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title {
-        padding: 30px 15px 15px 15px !important; /* Retain responsive container framing */
+/* UPDATE 3: Desktop layout tweaks targeting only screens above 480px width */
+@media screen and (min-width: 481px) {
+    .jwplayer.jw-skin-sme-brand .jw-title-primary {
+        white-space: normal !important;    /* Remove nowrap to let title break naturally */
+        padding-bottom: 0em !important;    /* Remove bottom padding */
+        line-height: 1.27em !important;    /* Clean typography height tracking */
     }
 }
 
-/* Core fallback hooks tracking native container breakpoint alterations */
+/* Fallback protection targeting JW Player's higher native responsive wrappers */
+.jwplayer.jw-skin-sme-brand:not(.jw-breakpoint-0):not(.jw-breakpoint-1) .jw-title-primary {
+    white-space: normal !important;
+    padding-bottom: 0em !important;
+    line-height: 1.27em !important;
+}
+
+/* ==========================================================================
+   6. MOBILE ONLY TITLE OPTIMIZATIONS (MAX-WIDTH: 480px)
+   ========================================================================== */
+/* UPDATE 4: Standard properties preserved on devices under 480px */
+@media screen and (max-width: 480px) {
+    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title-primary {
+        font-size: 1.0em !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        /* Line-height, bottom padding, and nowrap behaviors left intact here */
+    }
+    
+    .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title {
+        padding: 30px 15px 15px 15px !important;
+    }
+    
+    .jwplayer.jw-skin-sme-brand .jw-title-description {
+        font-size: 15px !important;
+    }
+}
+
+/* Core native fallback hooks preserving small size structures layout rules */
 .jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-0 .jw-title-primary,
 .jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-1 .jw-title-primary {
     font-size: 1.0em !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
-    padding-bottom: 0px !important;
+}
+
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-0 .jw-title-description,
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-1 .jw-title-description {
+    font-size: 15px !important;
 }
