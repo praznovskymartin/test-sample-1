@@ -49,6 +49,34 @@
     display: block !important;
 }
 
+/* --- Responsive Layout Constraints for the SVG/Image Logo Wrapper --- */
+
+/* Tablet Viewports */
+@media screen and (max-width: 768px) {
+    .jwplayer.jw-skin-sme-brand .jw-logo {
+        top: 12px !important;    /* Tighten margins slightly */
+        right: 12px !important;
+    }
+    .jwplayer.jw-skin-sme-brand .jw-logo-button img,
+    .jwplayer.jw-skin-sme-brand .jw-logo-button svg {
+        width: 45px !important;  /* Scale down wrapper size */
+        height: auto !important;
+    }
+}
+
+/* Mobile Viewports */
+@media screen and (max-width: 480px) {
+    .jwplayer.jw-skin-sme-brand .jw-logo {
+        top: 10px !important;    /* Clean pin constraints */
+        right: 10px !important;
+    }
+    .jwplayer.jw-skin-sme-brand .jw-logo-button img,
+    .jwplayer.jw-skin-sme-brand .jw-logo-button svg {
+        width: 36px !important;  /* Compact view layout constraint */
+        height: auto !important;
+    }
+}
+
 /* ==========================================================================
    3. BRAND DESCRIPTION BANNER (PINNED TO BOTTOM OVERLAY)
    ========================================================================== */
