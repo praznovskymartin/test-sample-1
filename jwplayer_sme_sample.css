@@ -16,7 +16,7 @@
     color: #ffffff !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
-    padding: 10px;
+    padding:10px;
 }
 
 /* Brightens and scales smoothly on initial hover event states */
@@ -34,6 +34,17 @@
     line-height: 70px !important;
 }
 
+/* --- Mobile Fix: Remove extra padding/footprint overhead for small widgets --- */
+/* Combines standard browser queries with JW Player container breakpoints (0 and 1) */
+@media screen and (max-width: 467px) {
+    .jwplayer.jw-skin-sme-brand .jw-display-icon-container .jw-icon-display {
+        padding: 0px !important;
+    }
+}
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-0 .jw-display-icon-container .jw-icon-display,
+.jwplayer.jw-skin-sme-brand.jw-breakpoint-1 .jw-display-icon-container .jw-icon-display {
+    padding: 0px !important;
+}
 
 /* ==========================================================================
    2. LOGO DISPLAY RULES (ONLY SHOW ON IDLE STATE)
