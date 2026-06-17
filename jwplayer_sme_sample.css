@@ -134,7 +134,7 @@
 /* UPDATE 3: Desktop layout tweaks targeting only screens above 480px width */
 @media screen and (min-width: 481px) {
     .jwplayer.jw-skin-sme-brand .jw-title-primary {
-        white-space: normal !important;    /* Remove nowrap to let title break naturally */
+        white-space: none !important;    /* Remove nowrap to let title break naturally */
         padding-bottom: 0em !important;    /* Remove bottom padding */
         line-height: 1.27em !important;    /* Clean typography height tracking */
     }
@@ -154,13 +154,15 @@
 @media screen and (max-width: 480px) {
     .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title-primary {
         font-size: 1.0em !important;
-        padding-left: 0px !important;
+        padding-left: 30px !important;
         padding-right: 0px !important;
+        white-space: nowrap !important;
+        padding-bottom: 0px !important;
         /* Line-height, bottom padding, and nowrap behaviors left intact here */
     }
     
     .jwplayer.jw-skin-sme-brand.jw-state-idle .jw-title {
-        padding: 30px 15px 15px 15px !important;
+        padding: 30px 15px 10px 15px !important;
     }
     
     .jwplayer.jw-skin-sme-brand .jw-title-description {
@@ -176,7 +178,18 @@
     padding-right: 0px !important;
 }
 
+.jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-0 .jw-title ,
+.jwplayer.jw-skin-sme-brand.jw-state-idle.jw-breakpoint-1 .jw-title-primary {
+     padding-bottom: 10px !important;
+}
+
 .jwplayer.jw-skin-sme-brand.jw-breakpoint-0 .jw-title-description,
 .jwplayer.jw-skin-sme-brand.jw-breakpoint-1 .jw-title-description {
     font-size: 15px !important;
+}
+
+/* backdrop */
+
+.jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controls-backdrop {
+    background: none;
 }
