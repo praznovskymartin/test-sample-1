@@ -190,6 +190,9 @@
 
 /* backdrop */
 
-.jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controls-backdrop {
+.jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controls-backdrop,
+.jwplayer.jw-skin-sme-brand.jw-state-idle .jw-controls {
     background: none;
 }
+
+
